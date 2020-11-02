@@ -55,7 +55,7 @@ export class ProjectService {
     return this.api.getProjectCollections(this.project._id).pipe(
       map((res: any) => this.processCollections(res && res[0] && res[0].searchResults ? res[0].searchResults : null)),
       switchMap((collections: any[]) => {
-        // Send all getCollectionDocuments API requests concurrently and combine the results as a single array 
+        // Send all getCollectionDocuments API requests concurrently and combine the results as a single array
         return forkJoin(collections.map(collection => this.api.getCollectionDocuments(collection._id))).pipe(
           map((res: any[]) => {
             for (let i = 0; i < collections.length; i++) {
